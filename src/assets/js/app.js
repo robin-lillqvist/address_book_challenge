@@ -14,7 +14,7 @@ const  renderContacts = () => {
 			var newDiv = document.createElement("div");
 			newDiv.classList.add("contact-card");
 			newDiv.innerHTML = `
-				<form id="update-contact-form">
+				<form id="contact-form">
 					<label for="updateName">Name</label>
 					<input id="updateName" name="name" type="text" value="${contact.name}"></br>
 					<label for="updateEmail">Email</label>
@@ -57,8 +57,7 @@ const  renderContacts = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
 	renderContacts()
-	const  contactForm = document.getElementById('new-contact-form')
-	//const  updateContactForm = document.getElementById('update-contact-form') Removed Update function for now
+	const  contactForm = document.getElementById('contact-form')
 	const  toggleFormVisibilityButton = document.getElementById('add-contact')
 	contactForm.style.display = 'none'
  
@@ -83,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				phone:  phone.value,
 				company:  company.value,
 				notes:  notes.value,
-				twitter:  twitter.value,
+				twitter:  twitter.value
 			}
 		
 			let contacts = JSON.parse(storage.getItem('contacts')) || []
