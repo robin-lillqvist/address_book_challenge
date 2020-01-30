@@ -58,7 +58,7 @@ const  renderContacts = () => {
 document.addEventListener('DOMContentLoaded', () => {
 	renderContacts()
 	const  contactForm = document.getElementById('new-contact-form')
-	const  updateContactForm = document.getElementById('update-contact-form')
+	//const  updateContactForm = document.getElementById('update-contact-form') Removed Update function for now
 	const  toggleFormVisibilityButton = document.getElementById('add-contact')
 	contactForm.style.display = 'none'
  
@@ -95,20 +95,20 @@ document.addEventListener('DOMContentLoaded', () => {
 	   })
 })
 
-function RemoveContact(toBeRemoved) {
-    let newContacts = JSON.parse(storage.getItem('contacts'))
-    newContacts.splice(toBeRemoved, 1);
-    storage.clear()
+const RemoveContact = (idToBeRemoved) => {
+	let newContacts = JSON.parse(storage.getItem('contacts'))
+	newContacts.splice(idToBeRemoved, 1);
+	storage.clear()
     storage.setItem('contacts', JSON.stringify(newContacts))
     renderContacts()
 }
 
-function RemoveAllContact() {
+const RemoveAllContact = () => {
     storage.clear()
     renderContacts()
 }
 
-function updateContact(id) {
+const updateContact = (id) => {
 	contactToUpdate = id
 	console.log("Set contactToUpdate to:" +id )
 	renderContacts()
