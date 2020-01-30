@@ -1,9 +1,8 @@
 const  storage = window.localStorage
-let contactToUpdate = null
+let contactToUpdate
 
 const  renderContacts = () => {
   const  contacts = JSON.parse(storage.getItem('contacts'))
-
   let  div = document.querySelector('#contact-list')
   if (contacts) {
 	div.innerHTML = ''
@@ -15,39 +14,40 @@ const  renderContacts = () => {
 			var newDiv = document.createElement("div");
 			newDiv.classList.add("contact-card");
 			newDiv.innerHTML = `
-			<form id="update-contact-form">
-				<label for="updateName">Name</label>
-				<input id="updateName" name="name" type="text" value="${contact.name}"></br>
-				<label for="updateEmail">Email</label>
-				<input id="updateEmail" name="email" type="text" value="${contact.email}"></br>
-				<label for="updatePhone">Phone</label>
-				<input id="updatePhone" name="phone" type="text" value="${contact.phone}"></br>
-				<label for="updateCompany">Company</label>
-				<input id="updateCompany" name="company" type="text" value="${contact.company}"></br>
-				<label for="updateNotes">Notes</label>
-				<input id="updateNotes" name="notes" type="text" value="${contact.notes}"></br>
-				<label for="updateTwitter">Twitter</label>
-				<input id="updateTwitter" name="twitter" type="text" value="${contact.twitter}"></br>
-				<input id="updateSubmit" type="submit" value="Update contact">
-			</form>`
+				<form id="update-contact-form">
+					<label for="updateName">Name</label>
+					<input id="updateName" name="name" type="text" value="${contact.name}"></br>
+					<label for="updateEmail">Email</label>
+					<input id="updateEmail" name="email" type="text" value="${contact.email}"></br>
+					<label for="updatePhone">Phone</label>
+					<input id="updatePhone" name="phone" type="text" value="${contact.phone}"></br>
+					<label for="updateCompany">Company</label>
+					<input id="updateCompany" name="company" type="text" value="${contact.company}"></br>
+					<label for="updateNotes">Notes</label>
+					<input id="updateNotes" name="notes" type="text" value="${contact.notes}"></br>
+					<label for="updateTwitter">Twitter</label>
+					<input id="updateTwitter" name="twitter" type="text" value="${contact.twitter}"></br>
+					<input id="updateSubmit" type="submit" value="Update contact">
+				</form>`
 			div.appendChild(newDiv)
 		}else{
 				var newDiv = document.createElement("div");
 				newDiv.classList.add("contact-card");
 				newDiv.innerHTML = `
 				
-				<div class="icon"></div><div class="contact-name">${contact.name}</div>
+				<div class="icon">
+				</div><div class="contact-name">${contact.name}</div>
 				<div class="contact-email">${contact.email}</div>
 				<div class="contact-phone">${contact.phone}</div>
 				<div class="contact-company">${contact.company}</div>
 				<div class="contact-notes">${contact.notes}</div>
 				<div class="contact-twitter">@${contact.twitter}</div>
-				<input type="button" value="Update" class="updateButton" onclick="updateContact(${i})"/> 
-				<input type="button" value="DeleteRobin" class="deleteButton" onclick="RemoveContact('${i}')"/>
-				<input type="button" value="DeleteKarro" class="deleteButtonKarro" onclick="RemoveContactKarro('${contact.email}')"/>`
+				<input type="button" value="Update" id="updateButton" class="updateButton" onclick="updateContact(${i})"/> 
+				<input type="button" value="Delete" id="deleteButton" class="deleteButton" onclick="RemoveContact('${i}')"/>
+				`
 				div.appendChild(newDiv)
 				}
-        i++;
+        	i++;
 	  })
 	} else {
 	  div.innerHTML = '<p>You have no contacts in your address book</p>'
@@ -71,11 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 		contactForm.addEventListener('submit', event  => {
 			event.preventDefault()
-	
+			console.log("ContactForm.addEventListener")
+
 			// 1. Read all the input fields and get their values
 			const { name, email, phone, company, notes, twitter } = contactForm.elements
 	
-			const  contact = {
+			const contact = {
 				name:  name.value,
 				email:  email.value,
 				phone:  phone.value,
@@ -83,33 +84,40 @@ document.addEventListener('DOMContentLoaded', () => {
 				notes:  notes.value,
 				twitter:  twitter.value,
 			}
-			console.log(contact)
-			
+		
 			let contacts = JSON.parse(storage.getItem('contacts')) || []
 			contacts.push(contact)
-	
 			// 2. Save them to our storage
 			storage.setItem('contacts', JSON.stringify(contacts))
 			renderContacts()
 			contactForm.reset()
 	   })
 
-	   updateContactForm.addEventListener('submit', event  => {
-		event.preventDefault()
+		updateContactForm.addEventListener('submit', event  => {
+			event.preventDefault()
+			
+			console.log("updateContactForm.addEventListener")
+	
+			// 1. Read all the input fields and get their values
+			const { name, email, phone, company, notes, twitter } = updateContactForm.elements
+	
+			const contact = {
+				name:  name.value,
+				email:  email.value,
+				phone:  phone.value,
+				company:  company.value,
+				notes:  notes.value,
+				twitter:  twitter.value,
+			}
+		
+			let contacts = JSON.parse(storage.getItem('contacts')) || []
+			contacts.push(contact)
+			// 2. Save them to our storage
+			storage.setItem('contacts', JSON.stringify(contacts))
+			renderContacts()
+			contactForm.reset()
+   			})
 
-		// 1. Read all the input fields and get their values
-		const { name, email, phone, company, notes, twitter } = contactForm.elements
-
-		const  contact = {
-			name:  name.value,
-			email:  email.value,
-			phone:  phone.value,
-			company:  company.value,
-			notes:  notes.value,
-			twitter:  twitter.value,
-		}
-		console.log(contact)
-   })
 })
 
 function RemoveContact(toBeRemoved) {
@@ -118,17 +126,6 @@ function RemoveContact(toBeRemoved) {
     storage.clear()
     storage.setItem('contacts', JSON.stringify(newContacts))
     renderContacts()
-}
-
-function RemoveContactKarro(email) {
-	// This is a function that I wrote from how Karolina had done hers... in hopes that Cypress would like it better. 
-	var contacts = JSON.parse(localStorage.contacts);
-	let newContacts = contacts.filter(
-		contact => contact.email !== email 
-	);
-	storage.clear()
-    storage.setItem('contacts', JSON.stringify(newContacts))
-	renderContacts()	
 }
 
 function RemoveAllContact() {

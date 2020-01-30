@@ -9,7 +9,7 @@ before(() => {
     cy.get('#add-contact').click()
 })
 
-describe('User can create a contact', () => {
+	describe('User can create a contact', () => {
 	it('Create contact', () => {      
 		cy.get('#name').type('Robin')
 		cy.get('#email').type('robin@abacuz.se')
@@ -45,10 +45,10 @@ describe('User can create a contact', () => {
 	})
 
 	it('Displays update button', () => {
-		cy.get('.updateButton')
+		cy.get('#updateButton')
 	})
 
 	it('Displays the delete button', () => {
-		cy.get('.deleteButton')
+		cy.get('#deleteButton')
 	})
 })
