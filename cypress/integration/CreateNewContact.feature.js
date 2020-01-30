@@ -3,9 +3,6 @@ As a user
 To stay in touch with my friends
 I would like to be able to create a contact for them in my address book
 */
-
-
-
 describe('User can create a contact', () => {
 
   before(() => {
