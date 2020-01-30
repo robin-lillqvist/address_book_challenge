@@ -25,3 +25,25 @@ Userstories:
     As a user
     In order to keep my contact list up to date
     I would like to be able to delete contacts
+    
+    
+    
+    To run this  you need to 
+
+        - yarn init
+        - yarn add cypress --dev
+        - yarn add superstatic 
+        
+        and modify your package.json to include
+                  "devDependencies": {
+                    "cypress": "^3.8.3"
+                    },
+                  "dependencies": {
+                    "browser-sync": "^2.26.7",
+                    "superstatic": "^6.0.4" 
+                    },        
+                 "scripts": {
+                    "start": "superstatic src --port 3001",
+                    "start:hot": "node server.js",
+                    "cy:open": "yarn start & cypress open" 
+                    }
