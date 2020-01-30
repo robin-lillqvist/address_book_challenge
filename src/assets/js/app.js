@@ -42,9 +42,10 @@ const  renderContacts = () => {
 				<div class="contact-company">${contact.company}</div>
 				<div class="contact-notes">${contact.notes}</div>
 				<div class="contact-twitter">@${contact.twitter}</div>
-				<input type="button" value="Update" id="updateButton" class="updateButton" onclick="updateContact(${i})"/> 
+				
 				<input type="button" value="Delete" id="deleteButton" class="deleteButton" onclick="RemoveContact('${i}')"/>
 				`
+				// <input type="button" value="Update" id="updateButton" class="updateButton" onclick="updateContact(${i})"/>  for when update function works
 				div.appendChild(newDiv)
 				}
         	i++;
@@ -92,32 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			renderContacts()
 			contactForm.reset()
 	   })
-
-		updateContactForm.addEventListener('submit', event  => {
-			event.preventDefault()
-			
-			console.log("updateContactForm.addEventListener")
-	
-			// 1. Read all the input fields and get their values
-			const { name, email, phone, company, notes, twitter } = updateContactForm.elements
-	
-			const contact = {
-				name:  name.value,
-				email:  email.value,
-				phone:  phone.value,
-				company:  company.value,
-				notes:  notes.value,
-				twitter:  twitter.value,
-			}
-		
-			let contacts = JSON.parse(storage.getItem('contacts')) || []
-			contacts.push(contact)
-			// 2. Save them to our storage
-			storage.setItem('contacts', JSON.stringify(contacts))
-			renderContacts()
-			contactForm.reset()
-   			})
-
 })
 
 function RemoveContact(toBeRemoved) {

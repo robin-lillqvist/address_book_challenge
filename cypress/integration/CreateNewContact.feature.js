@@ -42,11 +42,11 @@ describe('User can create a contact', () => {
     cy.get('#contact-list').should('contain', 'Abacuz08')
   })
 
-  it('Displays update button', () => {
-    cy.get('#update-button')
+  it.skip('Displays update button', () => {
+    cy.get('updateButton')
   })
 
   it('Displays the delete button', () => {
-    cy.get('#delete-button')
+    cy.get('.deleteButton')
   })
 })

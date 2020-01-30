@@ -17,7 +17,7 @@ describe('clicking the "Delete" button', () => {
   })
 
   it('removes the contact', () => {
-    cy.get('#delete-button').click()
+    cy.get('.deleteButton').click()
     cy.contains('robin@abacuz.se').should('not.exist')
   })
 });
