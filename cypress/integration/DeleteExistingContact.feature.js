@@ -16,8 +16,14 @@ describe('clicking the "Delete" button', () => {
     cy.get('#submit').click()
   })
 
-  it('removes the contact', () => {
+  it('removes the specific contact', () => {
     cy.get('.deleteButton').click()
     cy.contains('robin@abacuz.se').should('not.exist')
   })
+
+  it('removes all the contacts', () => {
+    cy.get('#removeall').click()
+    cy.contains('robin@abacuz.se').should('not.exist')
+  })
+
 });
