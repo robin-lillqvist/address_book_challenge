@@ -42,9 +42,10 @@ const  renderContacts = () => {
 				<div class="contact-company">${contact.company}</div>
 				<div class="contact-notes">${contact.notes}</div>
 				<div class="contact-twitter">@${contact.twitter}</div>
-				<input type="button" value="Update" id="updateButton" class="updateButton" onclick="updateContact(${i})"/> 
+				
 				<input type="button" value="Delete" id="deleteButton" class="deleteButton" onclick="RemoveContact('${i}')"/>
 				`
+				// <input type="button" value="Update" id="updateButton" class="updateButton" onclick="updateContact(${i})"/>  for when update function works
 				div.appendChild(newDiv)
 				}
         	i++;
