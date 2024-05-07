@@ -10,7 +10,7 @@
     "cypress": "^13.8.1"
   },
   "dependencies": {
-    "browser-sync": "^2.29.3",
+    "browser-sync": "^3.0.2",
     "superstatic": "^6.0.4"
   },
   "scripts": {
